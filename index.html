@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>passWord Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #passs {
+            margin-top: 20px;
+        }
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>PassWord Generator</h1>
+    <button onclick="generatepasss()">Generate passs</button>
+    <div id="passs"></div>
+
+    <script>
+        function getRandomChar() {
+            const specialChar = '!@#$%^&*()_+[]{}|;:,.<>?';
+            const randomIndex = Math.floor(Math.random() * specialChar.length);
+            return specialChar[randomIndex];
+        }
+
+        function generatepass() {
+            const passwordSize = 15;
+            let pass = '';
+
+            for (let i = 0; i < passwordSize; i++) {
+                if (i === 4 || i === 6) {
+                    pass += getRandomChar();
+                } else {
+                    const randomCharCode = Math.floor(Math.random() * (126 - 33)) + 33;
+                    pass += String.fromCharCode(randomCharCode);
+                }
+            }
+
+            return pass;
+        }
+
+        function generateUniquepass(count) {
+            const uniquepasss = new Set();
+
+            while (uniquepasss.size < count) {
+                const pass = generatepass();
+                uniquepasss.add(pass);
+            }
+
+            return Array.from(uniquepasss);
+        }
+
+        function generatepasss() {
+            const numberOfpasss = 10;
+            const uniquepasss = generateUniquepass(numberOfpasss);
+            const passsContainer = document.getElementById('passs');
+
+            passsContainer.innerHTML = '';
+
+            uniquepasss.forEach((pass, index) => {
+                const passElement = document.createElement('p');
+                passElement.textContent = `pass ${index + 1}: ${pass}`;
+                passsContainer.appendChild(passElement);
+            });
+        }
+    </script>
+</body>
+</html>
